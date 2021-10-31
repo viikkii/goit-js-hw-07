@@ -1,9 +1,12 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
+console.log(galleryItems);
+
 const galleryContainer = document.querySelector(".gallery");
 const galleryMarkup = createElementsMarkup(galleryItems);
 galleryContainer.insertAdjacentHTML("beforeend", galleryMarkup);
+
 
 function createElementsMarkup(galleryItems) {
     return galleryItems
@@ -42,7 +45,7 @@ function selectGallery(event) {
             instance.element().onclick = instance.close
         }       
     })
-    
+
     instance.show()
     
     document.addEventListener("keydown", (e) => {
