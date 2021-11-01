@@ -48,9 +48,11 @@ function selectGallery(event) {
 
     instance.show()
     
-    document.addEventListener("keydown", (e) => {
+    window.addEventListener("keydown", function handClick (e) {
     if (e.keyCode === 27) {
-    instance.close()
-    }
-})
+        instance.close()
+        e.target.removeEventListener( "keydown", handClick, false );  
+        } 
+    },
+        false)
 }
