@@ -27,6 +27,16 @@ function createElementsMarkup(galleryItems) {
 
 galleryContainer.addEventListener("click", selectGallery);
 
+    const instance = basicLightbox.create(`
+<img class="gallery__link" src="${selectGallery}">`, {
+        onShow: (instance) => {
+           window.addEventListener("keydown", handClick);
+        },
+        onClose: (instance) => {
+           window.removeEventListener("keydown", handClick);
+        }
+    })
+
 function selectGallery(event) {
     event.preventDefault();
     const selectGallery = event.target.dataset.source;
@@ -34,25 +44,16 @@ function selectGallery(event) {
     if (event.target.className !== "gallery__image") {
         console.log(event.target.className);
         return;
-    };
-        
-    const instance = basicLightbox.create(`
-<img width="1280" height="860" src="${selectGallery}">`, {
-        onShow: (instance) => {
-            instance.element().onclick = instance.close
-        },
-        onClose: (instance) => {
-            instance.element().onclick = instance.close
-        }       
-    })
-
-    instance.show()
+    }
+    instance.show();  
+    instance.element().querySelector(".gallery__link").src = selectGallery;
     
-    window.addEventListener("keydown", function handClick (e) {
-    if (e.keyCode === 27) {
-        instance.close()
-        e.target.removeEventListener( "keydown", handClick, false );  
-        } 
-    },
-        false)
-}
+    };
+
+    
+   function handClick(evt) {
+        if (evt.keyCode === 27) {
+            instance.close()
+            return;
+        }
+    }
